@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indoor & Unaware — The Hidden Life of Houseplants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F8F6EF;
+    --panel:#FFFFFF;
+    --ink:#1F3626;
+    --ink-soft:#4B5C50;
+    --green:#3E6A50;
+    --green-pale:#E4EBE2;
+    --gold:#C08A32;
+    --line:rgba(31,54,38,0.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+  }
+  img{display:block;width:100%;height:100%;object-fit:cover;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+
+  h1,h2,h3{font-family:'Instrument Serif',serif;font-weight:400;letter-spacing:-0.01em;}
+  em{font-style:italic;color:var(--green);}
+
+  .eyebrow{
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--green);
+    display:flex;align-items:center;gap:9px;
+  }
+  .eyebrow::before{
+    content:'';width:16px;height:1px;background:var(--gold);display:inline-block;
+  }
+
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:40;
+    background:rgba(248,246,239,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .inner{
+    max-width:1120px;margin:0 auto;padding:18px 32px;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  nav .brand{font-family:'Instrument Serif',serif;font-size:21px;}
+  nav .links{display:flex;gap:28px;font-size:13.5px;color:var(--ink-soft);}
+  nav .links a{text-decoration:none;color:inherit;}
+  nav .links a:hover{color:var(--green);}
+  @media (max-width:700px){nav .links{display:none;}}
+
+  /* HERO */
+  .hero{
+    padding:76px 0 0;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:56px;
+    align-items:center;
+  }
+  @media (max-width:900px){.hero-grid{grid-template-columns:1fr;}}
+  .hero h1{
+    font-size:clamp(40px,6vw,68px);
+    line-height:1.04;
+    margin:20px 0 22px;
+  }
+  .hero p.sub{
+    font-size:17px;
+    color:var(--ink-soft);
+    max-width:460px;
+    line-height:1.7;
+    margin-bottom:30px;
+  }
+  .stat-row{display:flex;gap:36px;margin-top:8px;flex-wrap:wrap;}
+  .stat-row .stat b{
+    display:block;font-family:'Instrument Serif',serif;font-size:34px;color:var(--green);
+  }
+  .stat-row .stat span{font-size:12.5px;color:var(--ink-soft);}
+  .hero-photo{
+    aspect-ratio:4/5;
+    border-radius:4px;
+    overflow:hidden;
+    position:relative;
+    box-shadow:0 30px 60px -30px rgba(31,54,38,0.35);
+  }
+  .hero-photo .tag{
+    position:absolute;bottom:16px;left:16px;
+    background:rgba(248,246,239,0.92);
+    padding:8px 12px;
+    font-family:'Space Mono',monospace;
+    font-size:10.5px;letter-spacing:0.06em;
+    color:var(--ink);
+    border-radius:2px;
+  }
+
+  section{padding:96px 0;}
+  .divider{border-top:1px solid var(--line);}
+
+  h2.section-title{
+    font-size:clamp(30px,4vw,46px);
+    max-width:600px;
+    margin:16px 0 18px;
+  }
+  p.section-lead{
+    max-width:580px;
+    color:var(--ink-soft);
+    font-size:16px;
+    line-height:1.75;
+  }
+
+  /* STATS / WHY SECTION */
+  .why-grid{
+    margin-top:56px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  @media (max-width:760px){.why-grid{grid-template-columns:1fr;}}
+  .why-card{
+    background:var(--panel);
+    padding:34px 30px;
+  }
+  .why-card .n{
+    font-family:'Space Mono',monospace;
+    font-size:11px;color:var(--gold);letter-spacing:0.08em;margin-bottom:14px;
+  }
+  .why-card h3{font-size:23px;margin-bottom:10px;font-family:'Inter';font-weight:600;}
+  .why-card p{font-size:14.5px;color:var(--ink-soft);line-height:1.65;}
+
+  /* PLANT GRID */
+  .plant-grid{
+    margin-top:56px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:32px;
+  }
+  @media (max-width:760px){.plant-grid{grid-template-columns:1fr;}}
+  .plant-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .plant-card .photo{aspect-ratio:16/10;}
+  .plant-card .body{padding:26px 26px 28px;}
+  .plant-card .kicker{
+    font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:0.08em;
+    color:var(--ink-soft);text-transform:uppercase;margin-bottom:6px;
+  }
+  .plant-card h3{font-size:27px;margin-bottom:10px;}
+  .plant-card p{font-size:14.5px;color:var(--ink-soft);line-height:1.65;margin-bottom:18px;}
+
+  .light-meter{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
+  .light-meter .row{display:flex;align-items:center;gap:10px;}
+  .light-meter .label{
+    font-family:'Space Mono',monospace;font-size:10.5px;color:var(--ink-soft);
+    width:64px;flex-shrink:0;
+  }
+  .light-meter .track{flex:1;height:5px;background:var(--green-pale);border-radius:3px;overflow:hidden;}
+  .light-meter .fill{height:100%;background:var(--gold);border-radius:3px;}
+
+  .care-tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .care-tags span{
+    font-size:11.5px;
+    padding:5px 10px;
+    background:var(--green-pale);
+    color:var(--green);
+    border-radius:20px;
+    font-weight:500;
+  }
+
+  /* LIGHT ZONES SECTION (informational, diagram-like) */
+  .zones{
+    margin-top:56px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:0;
+    border:1px solid var(--line);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  @media (max-width:760px){.zones{grid-template-columns:1fr;}}
+  .zone-col{
+    padding:30px 24px;
+    border-right:1px solid var(--line);
+    background:var(--panel);
+  }
+  .zone-col:last-child{border-right:none;}
+  @media (max-width:760px){.zone-col{border-right:none;border-bottom:1px solid var(--line);}}
+  .zone-col .compass{
+    width:34px;height:34px;
+    border-radius:50%;
+    border:1.5px solid var(--green);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Mono',monospace;
+    font-size:11px;color:var(--green);
+    margin-bottom:18px;
+  }
+  .zone-col h3{font-size:20px;margin-bottom:8px;font-family:'Inter';font-weight:600;}
+  .zone-col p{font-size:13.5px;color:var(--ink-soft);line-height:1.6;}
+
+  /* MYTHS SECTION */
+  .myths{margin-top:56px;display:flex;flex-direction:column;}
+  .myth{
+    display:grid;
+    grid-template-columns:120px 1fr 1fr;
+    gap:28px;
+    padding:26px 0;
+    border-top:1px solid var(--line);
+    align-items:start;
+  }
+  .myth:last-child{border-bottom:1px solid var(--line);}
+  @media (max-width:760px){.myth{grid-template-columns:1fr;gap:8px;}}
+  .myth .idx{
+    font-family:'Space Mono',monospace;font-size:11px;color:var(--ink-soft);padding-top:4px;
+  }
+  .myth .m-label{font-size:11px;font-family:'Space Mono',monospace;color:#B45248;letter-spacing:0.06em;margin-bottom:6px;}
+  .myth .f-label{font-size:11px;font-family:'Space Mono',monospace;color:var(--green);letter-spacing:0.06em;margin-bottom:6px;}
+  .myth .m-text, .myth .f-text{font-size:15px;line-height:1.6;color:var(--ink);}
+  .myth .m-text{color:var(--ink-soft);text-decoration:line-through;text-decoration-color:rgba(180,82,72,0.35);}
+
+  /* CLOSING BAND */
+  .band{
+    background:var(--ink);
+    color:#F2EFE6;
+    padding:90px 0;
+  }
+  .band h2{color:#fff;font-size:clamp(30px,4.5vw,48px);max-width:640px;margin-bottom:20px;}
+  .band p{color:rgba(242,239,230,0.7);max-width:480px;font-size:15.5px;line-height:1.7;margin-bottom:0;}
+
+  footer{padding:44px 0;}
+  footer .meta{
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;
+    font-family:'Space Mono',monospace;font-size:11px;color:var(--ink-soft);
+    padding-top:22px;border-top:1px solid var(--line);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <div class="brand">Indoor & Unaware</div>
+    <div class="links">
+      <a href="#why">Why plants</a>
+      <a href="#meet">Meet five</a>
+      <a href="#light">Reading light</a>
+      <a href="#myths">Myths</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">A short field guide</div>
+        <h1>Your plants are<br>quietly running<br><em>a household too.</em></h1>
+        <p class="sub">Behind the watering can and the windowsill is a set of surprisingly deliberate behaviours — plants that lean toward light, ration their own water, and clean the air while you sleep. Here's what's actually going on in the pot.</p>
+        <div class="stat-row">
+          <div class="stat"><b>90%</b><span>of houseplant deaths trace to overwatering</span></div>
+          <div class="stat"><b>3–4</b><span>hours of direct sun most "bright light" plants really need</span></div>
+          <div class="stat"><b>1989</b><span>the year NASA's Clean Air Study began</span></div>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img src="https://images.unsplash.com/photo-1758524052716-31c646483a65?fm=jpg&q=80&w=1400&auto=format&fit=crop" alt="A gardener watering plants inside a bright greenhouse">
+        <div class="tag">GREENHOUSE, MORNING WATERING ROUND</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY SECTION -->
+  <section id="why" class="divider">
+    <div class="eyebrow">Why bother</div>
+    <h2 class="section-title">Three things a plant is actually doing for the room.</h2>
+    <p class="section-lead">Not folklore — these are the mechanisms researchers have actually been able to measure indoors, at normal houseplant densities.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="n">01</div>
+        <h3>It scrubs specific pollutants</h3>
+        <p>NASA's 1989 Clean Air Study found several common houseplants — pothos, spider plant, peace lily — measurably reduced benzene, formaldehyde and trichloroethylene in sealed test chambers over 24 hours.</p>
+      </div>
+      <div class="why-card">
+        <div class="n">02</div>
+        <h3>It raises local humidity</h3>
+        <p>Through transpiration, a single mature plant can release close to a litre of water vapour a week, gently lifting humidity in dry, heated or air-conditioned rooms.</p>
+      </div>
+      <div class="why-card">
+        <div class="n">03</div>
+        <h3>It shifts attention, briefly</h3>
+        <p>Studies on "micro-restoration" have linked even short glances at greenery to small, measurable drops in reported stress and mental fatigue during desk work.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEET FIVE -->
+  <section id="meet" class="divider">
+    <div class="eyebrow">Field notes</div>
+    <h2 class="section-title">Four houseplants, and what they're quietly telling you.</h2>
+    <p class="section-lead">The light meter below each one shows what it actually needs — not what the plant shop tag optimistically claims.</p>
+
+    <div class="plant-grid">
+
+      <div class="plant-card">
+        <div class="photo"><img src="https://images.unsplash.com/photo-1525498128493-380d1990a112?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Monstera deliciosa leaves"></div>
+        <div class="body">
+          <div class="kicker">Monstera deliciosa</div>
+          <h3>The Swiss Cheese Plant</h3>
+          <p>Those iconic splits — called fenestrations — are thought to let wind pass through without tearing the leaf, and to dapple light down to smaller leaves below in its native Central American canopy.</p>
+          <div class="light-meter">
+            <div class="row"><span class="label">LOW</span><div class="track"><div class="fill" style="width:20%"></div></div></div>
+            <div class="row"><span class="label">MEDIUM</span><div class="track"><div class="fill" style="width:70%"></div></div></div>
+            <div class="row"><span class="label">BRIGHT</span><div class="track"><div class="fill" style="width:45%"></div></div></div>
+          </div>
+          <div class="care-tags"><span>Weekly water</span><span>Climbs with support</span><span>Toxic to pets</span></div>
+        </div>
+      </div>
+
+      <div class="plant-card">
+        <div class="photo"><img src="https://images.unsplash.com/photo-1599719840163-1cd5b7c1fabe?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Snake plant in a white ceramic pot"></div>
+        <div class="body">
+          <div class="kicker">Dracaena trifasciata</div>
+          <h3>The Snake Plant</h3>
+          <p>Unusually for a succulent, it photosynthesises using CAM metabolism — opening its pores at night instead of day, which is why it's often credited with releasing oxygen after dark.</p>
+          <div class="light-meter">
+            <div class="row"><span class="label">LOW</span><div class="track"><div class="fill" style="width:80%"></div></div></div>
+            <div class="row"><span class="label">MEDIUM</span><div class="track"><div class="fill" style="width:60%"></div></div></div>
+            <div class="row"><span class="label">BRIGHT</span><div class="track"><div class="fill" style="width:35%"></div></div></div>
+          </div>
+          <div class="care-tags"><span>Water monthly</span><span>Tolerates neglect</span><span>Mildly toxic to pets</span></div>
+        </div>
+      </div>
+
+      <div class="plant-card">
+        <div class="photo"><img src="https://images.unsplash.com/photo-1551893665-f843f600794e?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Assorted succulents and cacti in small pots"></div>
+        <div class="body">
+          <div class="kicker">Succulents & cacti</div>
+          <h3>The Water Hoarders</h3>
+          <p>Fleshy leaves and stems store water in specialised tissue for exactly this reason — a trait evolved in arid climates where rain might not return for weeks at a time.</p>
+          <div class="light-meter">
+            <div class="row"><span class="label">LOW</span><div class="track"><div class="fill" style="width:15%"></div></div></div>
+            <div class="row"><span class="label">MEDIUM</span><div class="track"><div class="fill" style="width:40%"></div></div></div>
+            <div class="row"><span class="label">BRIGHT</span><div class="track"><div class="fill" style="width:85%"></div></div></div>
+          </div>
+          <div class="care-tags"><span>Water biweekly</span><span>Needs drainage</span><span>South-facing best</span></div>
+        </div>
+      </div>
+
+      <div class="plant-card">
+        <div class="photo"><img src="https://images.unsplash.com/photo-1611511450536-c944000fcc9a?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Close-up green fern fronds"></div>
+        <div class="body">
+          <div class="kicker">Nephrolepis & relatives</div>
+          <h3>The Forest-Floor Ferns</h3>
+          <p>Ferns evolved in the dim, damp understory of forests long before flowering plants existed — which is exactly why they sulk in a dry, sun-baked apartment window.</p>
+          <div class="light-meter">
+            <div class="row"><span class="label">LOW</span><div class="track"><div class="fill" style="width:65%"></div></div></div>
+            <div class="row"><span class="label">MEDIUM</span><div class="track"><div class="fill" style="width:75%"></div></div></div>
+            <div class="row"><span class="label">BRIGHT</span><div class="track"><div class="fill" style="width:10%"></div></div></div>
+          </div>
+          <div class="care-tags"><span>Keep soil moist</span><span>Loves humidity</span><span>Pet-safe</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LIGHT SECTION -->
+  <section id="light" class="divider">
+    <div class="eyebrow">Reading a room</div>
+    <h2 class="section-title">Your window's compass direction matters more than the room itself.</h2>
+    <p class="section-lead">A "bright" room can still be the wrong light for a plant, because what matters is which direction the window faces and how long direct sun actually reaches the leaves.</p>
+
+    <div class="zones">
+      <div class="zone-col">
+        <div class="compass">N</div>
+        <h3>North-facing</h3>
+        <p>The gentlest, most consistent light all day — no direct sun at all. Best for ferns, snake plants and other low-light natives.</p>
+      </div>
+      <div class="zone-col">
+        <div class="compass">E</div>
+        <h3>East-facing</h3>
+        <p>Soft direct sun for a few hours each morning, then indirect the rest of the day. A safe middle ground for most houseplants.</p>
+      </div>
+      <div class="zone-col">
+        <div class="compass">S</div>
+        <h3>South-facing</h3>
+        <p>The brightest exposure through most of the day. What succulents, cacti and citrus are actually asking for when they want "full sun."</p>
+      </div>
+      <div class="zone-col">
+        <div class="compass">W</div>
+        <h3>West-facing</h3>
+        <p>Intense, hot afternoon light. Can scorch thin-leafed plants unless filtered by a sheer curtain in peak summer months.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MYTHS SECTION -->
+  <section id="myths" class="divider">
+    <div class="eyebrow">Sorted out</div>
+    <h2 class="section-title">A few things everyone repeats about houseplants.</h2>
+    <p class="section-lead">Some of this is half-true, some outdated, some just plant-shop folklore. Here's the actual state of things.</p>
+
+    <div class="myths">
+      <div class="myth">
+        <div class="idx">01</div>
+        <div>
+          <div class="m-label">Widely repeated</div>
+          <div class="m-text">You need dozens of plants to noticeably clean a room's air.</div>
+        </div>
+        <div>
+          <div class="f-label">Closer to true</div>
+          <div class="f-text">NASA's original study used sealed chambers far smaller than a real room; follow-up research suggests you'd need far more plants per square metre than most homes have to match a basic air filter.</div>
+        </div>
+      </div>
+      <div class="myth">
+        <div class="idx">02</div>
+        <div>
+          <div class="m-label">Widely repeated</div>
+          <div class="m-text">Yellow leaves always mean underwatering — give it more.</div>
+        </div>
+        <div>
+          <div class="f-label">Closer to true</div>
+          <div class="f-text">Yellowing is actually the classic sign of overwatered roots suffocating. Check soil moisture before adding more — it's the opposite instinct to the usual reflex.</div>
+        </div>
+      </div>
+      <div class="myth">
+        <div class="idx">03</div>
+        <div>
+          <div class="m-label">Widely repeated</div>
+          <div class="m-text">Talking to your plants helps them grow.</div>
+        </div>
+        <div>
+          <div class="f-label">Closer to true</div>
+          <div class="f-text">The voice itself likely does nothing, but the gentle airflow from consistent talking may slightly strengthen stems — similar to the effect of a small fan.</div>
+        </div>
+      </div>
+      <div class="myth">
+        <div class="idx">04</div>
+        <div>
+          <div class="m-label">Widely repeated</div>
+          <div class="m-text">Misting raises humidity enough to matter.</div>
+        </div>
+        <div>
+          <div class="f-label">Closer to true</div>
+          <div class="f-text">A spray bottle's effect evaporates within minutes. A pebble tray or humidifier changes the air around a plant far more meaningfully over a full day.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="band">
+  <div class="wrap">
+    <h2>Most houseplants aren't fussy. They're just misread.</h2>
+    <p>Match the light to what the species actually evolved for, water by the soil rather than the calendar, and the "difficult" reputation mostly disappears.</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <footer>
+    <div class="meta">
+      <span>INDOOR & UNAWARE</span>
+      <span>SOURCES: NASA CLEAN AIR STUDY · RHS · UNIVERSITY EXTENSION HORTICULTURE PROGRAMS</span>
+      <span>PHOTOGRAPHY VIA UNSPLASH</span>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
